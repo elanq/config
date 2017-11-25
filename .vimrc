@@ -73,14 +73,6 @@ if version >= 700
   au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
 endif
 
-" highlight trailing spaces in annoying red
-" highlight ExtraWhitespace ctermbg=1 guibg=red
-"match ExtraWhitespace /\s\+$/
-"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-"autocmd BufWinLeave * call clearmatches()
-
 " set leader key to comma
 let mapleader = ","
 
@@ -106,8 +98,7 @@ if executable("fzf")
   nmap <leader>F :Lines<CR>
 endif
 
-" Map space
-" unmap ex mode: 'Type visual to go into Normal mode.'
+" Map space " unmap ex mode: 'Type visual to go into Normal mode.'
 nnoremap Q <nop>
 
 " fast saving
@@ -122,8 +113,6 @@ noremap <leader>D :GoDef<cr>
 " map . in visual mode
 vnoremap . :norm.<cr>
 
-" map markdown preview
-" map <leader>m :!open -a "Marked 2" "%"<cr><cr>
 "Remove all trailing whitespace by pressing leader+b
 nnoremap <leader>b :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 " map git commands
@@ -176,15 +165,6 @@ nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
 " turn on ycm
 nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
 
-" add :Plain command for converting text to plaintext
-" command! Plain execute "%s/’/'/ge | %s/[“”]/\"/ge | %s/—/-/ge"
-
-" jump to last position in file
-"autocmd BufReadPost *
-"  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-"  \   exe "normal g`\"" |
-"  \ endif
-
 " run GoLint on save
 autocmd BufWritePre *.go call go#lint#Golint()
 
@@ -205,14 +185,3 @@ function! JSONPrettify()
   exec ':%!python3 -m json.tool'
 endfunction
 map <leader>F :call JSONPrettify()<cr>
-
-" syntatic recommended settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_ruby_checkers          = ['rubocop', 'mri']
-"let g:syntatic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
