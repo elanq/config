@@ -76,12 +76,6 @@ endif
 " set leader key to comma
 let mapleader = ","
 
-if executable("rg")
-  " Use rg over grep
-  let g:ackprg = 'rg --vimgrep'
-  let g:ctrlp_user_command = 'rg --files %s'
-  let g:ctrlp_use_caching = 0
-endif
 
 " fzf plugin related action
 if executable("fzf")
@@ -95,7 +89,7 @@ if executable("fzf")
   nmap ; :Buffers<CR>
   nmap <Leader>f :Files<CR>
   nmap <Leader>g :Tags<CR>
-  nmap <leader>F :Lines<CR>
+  " nmap <leader>F :Lines<CR> conflicted with JSONPrettify
 endif
 
 " Map space " unmap ex mode: 'Type visual to go into Normal mode.'
@@ -135,7 +129,7 @@ map <F5> :setlocal spell! spelllang=en_us<cr>
 imap <F5> <ESC>:setlocal spell! spelllang=en_us<cr>
 "macvim specific command
 if has("gui_macvim")
-  colorscheme flatlandia
+  colorscheme onedark
   " autochange folder to current buffer
   "http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
   "autocmd BufEnter * if expand("%:p:h") !~ '/^tmp|^eq' | silent! lcd %:p:h | endif
@@ -152,6 +146,15 @@ if has("gui_macvim")
   noremap <D-9> :tabn 9<CR>
   " Command-0 goes to the last tab
   noremap <D-0> :tablast<CR>
+
+  if executable("rg")
+    " Use rg over grep
+    let g:ackprg = 'rg --vimgrep'
+    let g:ctrlp_user_command = 'rg --files %s'
+    let g:ctrlp_use_caching = 0
+    map <leader>f :CtrlP<cr>
+  endif
+
 endif
 
 " vim-go specific command
