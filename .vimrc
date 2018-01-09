@@ -149,7 +149,6 @@ if has("gui_macvim")
 
   if executable("rg")
     " Use rg over grep
-    let g:ackprg = 'rg --vimgrep'
     let g:ctrlp_user_command = 'rg --files %s'
     let g:ctrlp_use_caching = 0
     map <leader>f :CtrlP<cr>
@@ -157,6 +156,7 @@ if has("gui_macvim")
 
 endif
 
+let g:ackprg = 'rg --vimgrep'
 " vim-go specific command
 let g:go_highlight_functions = 1
 let g:go_highlight_fields = 1

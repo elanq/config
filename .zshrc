@@ -88,13 +88,13 @@ source /Users/eq/.aliases.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-CODECLIMATE_MACHINE="codeclimate"
-if docker-machine status $CODECLIMATE_MACHINE | grep "Running" &> /dev/null
- then
-   eval "$(docker-machine env $CODECLIMATE_MACHINE)"
- else
-   docker-machine start $CODECLIMATE_MACHINE && eval "$(docker-machine env $CODECLIMATE_MACHINE)"
-fi
+#DOCKER_MACHINE="master"
+#if docker-machine status $DOCKER_MACHINE | grep "Running" &> /dev/null
+# then
+#   eval "$(docker-machine env $DOCKER_MACHINE)"
+# else
+#   docker-machine start $DOCKER_MACHINE && eval "$(docker-machine env $DOCKER_MACHINE)"
+#fi
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
