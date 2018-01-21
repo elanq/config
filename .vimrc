@@ -6,6 +6,7 @@ call pathogen#helptags()
 
 syntax on                         " show syntax highlighting
 filetype plugin indent on
+set tags=./.tags;,tags;
 set autowrite
 set backspace=indent,eol,start
 set history=500
@@ -21,7 +22,7 @@ set relativenumber
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
-"set cursorline                    " highlight current line
+set cursorline                    " highlight current line
 set smartcase                     " pay attention to case when caps are used
 set incsearch                     " show search results as I type
 set ttimeoutlen=0                 " decrease timeout for faster insert with 'O'
@@ -56,7 +57,7 @@ highlight GitGutterAdd guifg = '#A3E28B'
 
 " set dark background and color scheme
 set background=dark
-colorscheme onedark
+colorscheme nord
 " set up some custom coloro
 highlight clear SignColumn
 highlight StatusLineNC ctermbg=238 ctermfg=0
@@ -108,7 +109,9 @@ noremap <leader>D :GoDef<cr>
 vnoremap . :norm.<cr>
 
 "Remove all trailing whitespace by pressing leader+b
-nnoremap <leader>b :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+"nnoremap <leader>reb :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+" check white space on save
+autocmd BufWritePre * %s/\s\+$//e
 " map git commands
 map <leader>l :!clear && git log -p %<cr>
 map <leader>d :!clear && git diff %<cr>
@@ -121,12 +124,7 @@ map <leader>t :tabnew<cr>
 noremap <C-l> :nohlsearch<CR>
 " toggle tree
 map <leader>e :NERDTreeToggle<cr>
-" select all
-" map <C-a> <esc>ggVG<CR>
 
-" toggle spell check with <F5>
-map <F5> :setlocal spell! spelllang=en_us<cr>
-imap <F5> <ESC>:setlocal spell! spelllang=en_us<cr>
 "macvim specific command
 if has("gui_macvim")
   colorscheme onedark
@@ -187,4 +185,14 @@ map <leader>n :call RenameFile()<cr>
 function! JSONPrettify()
   exec ':%!python3 -m json.tool'
 endfunction
+
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 map <leader>F :call JSONPrettify()<cr>
