@@ -53,11 +53,15 @@ syntax sync minlines=256
 
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added = '❖'
-highlight GitGutterAdd guifg = '#A3E28B'
 
+let g:neodark#terminal_transparent = 1
+highlight GitGutterAdd guifg = '#A3E28B'
+let g:lightline = {
+      \ 'colorscheme': 'seoul256'
+      \ }
 " set dark background and color scheme
 set background=dark
-colorscheme nord
+colorscheme neodark
 " set up some custom coloro
 highlight clear SignColumn
 highlight StatusLineNC ctermbg=238 ctermfg=0
