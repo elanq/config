@@ -16,9 +16,8 @@ set ts=2                          " set indent to 2 spaces
 set shiftwidth=2
 set expandtab                     " use spaces, not tab characters
 set nocompatible                  " don't need to be compatible with old vim
-"set relativenumber                " show relative line numbers
 set re=1                          "set regex engine to old one. apparently it's faster for ruby files
-set relativenumber
+set number
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
@@ -43,22 +42,23 @@ set guioptions=                   "remove any gui in macvim
 "set termguicolors
 set foldlevelstart=99            "don't atomatically fold large file
 "runtime macros/matchit.vim        " use % to jump between start/end of methods
-
+set updatetime=100               " useful for go info
 "improve syntax speed
 set nocursorcolumn
-set nocursorline
-"set norelativenumber
+"set nocursorline
+set norelativenumber
 syntax sync minlines=256
 "
 
+let mapleader = ","         " set leader key to comma
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added = '❖'
-
 let g:neodark#terminal_transparent = 1
-highlight GitGutterAdd guifg = '#A3E28B'
 let g:lightline = {
       \ 'colorscheme': 'seoul256'
       \ }
+let g:ackprg = 'rg --vimgrep'
+
 " set dark background and color scheme
 set background=dark
 colorscheme neodark
@@ -71,16 +71,25 @@ highlight Visual       ctermbg=3   ctermfg=0
 highlight Pmenu        ctermbg=240 ctermfg=12
 highlight PmenuSel     ctermbg=3   ctermfg=1
 highlight SpellBad     ctermbg=0   ctermfg=1
-
-" highlight the status bar when in insert mode
-if version >= 700
+highlight GitGutterAdd guifg = '#A3E28B'
+if version >= 700 " highlight the status bar when in insert mode
   au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
   au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
 endif
 
-" set leader key to comma
-let mapleader = ","
-
+" vim-go specific command
+let g:go_highlight_functions = 1
+let g:go_highlight_fields = 1
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_deadline = "3s"
+let g:go_def_mode = 'guru'
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+noremap <leader>T :GoCoverageToggle<cr>
+noremap <leader>D :GoDef<cr>
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 " fzf plugin related action
 if executable("fzf")
@@ -99,27 +108,19 @@ endif
 
 " Map space " unmap ex mode: 'Type visual to go into Normal mode.'
 nnoremap Q <nop>
-
 " fast saving
 map <leader>w :w!<cr>
-" call GoCoverageToggle
-noremap <leader>T :GoCoverageToggle<cr>
 " ack to current cursor
 noremap <Leader>a :Ack <cword><cr>
-" call GoDef
-noremap <leader>D :GoDef<cr>
-
 " map . in visual mode
 vnoremap . :norm.<cr>
-
-"Remove all trailing whitespace by pressing leader+b
-"nnoremap <leader>reb :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
-" check white space on save
-autocmd BufWritePre * %s/\s\+$//e
 " map git commands
 map <leader>l :!clear && git log -p %<cr>
 map <leader>d :!clear && git diff %<cr>
-
+" turn off ycm
+nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
+" turn on ycm
+nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
 " navigate tabs
 map <leader>m :tabprevious<cr>
 map <leader>. :tabnext<cr>
@@ -128,10 +129,12 @@ map <leader>t :tabnew<cr>
 noremap <C-l> :nohlsearch<CR>
 " toggle tree
 map <leader>e :NERDTreeToggle<cr>
+map <leader>n :call RenameFile()<cr>
+map <leader>F :call JSONPrettify()<cr>
 
 "macvim specific command
 if has("gui_macvim")
-  colorscheme onedark
+  colorscheme neodark
   " autochange folder to current buffer
   "http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
   "autocmd BufEnter * if expand("%:p:h") !~ '/^tmp|^eq' | silent! lcd %:p:h | endif
@@ -151,27 +154,19 @@ if has("gui_macvim")
 
   if executable("rg")
     " Use rg over grep
+    " why? because somehow in Macvim fzf doesn't look really good (glitchy
+    " look?)
     let g:ctrlp_user_command = 'rg --files %s'
     let g:ctrlp_use_caching = 0
     map <leader>f :CtrlP<cr>
   endif
-
 endif
-
-let g:ackprg = 'rg --vimgrep'
-" vim-go specific command
-let g:go_highlight_functions = 1
-let g:go_highlight_fields = 1
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-
-" turn off ycm
-nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
-" turn on ycm
-nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
 
 " run GoLint on save
 autocmd BufWritePre *.go call go#lint#Golint()
+" check white space on save
+autocmd BufWritePre * %s/\s\+$//e
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 " rename current file, via Gary Bernhardt
 function! RenameFile()
@@ -183,13 +178,13 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <leader>n :call RenameFile()<cr>
 
 " prettify json file
 function! JSONPrettify()
   exec ':%!python3 -m json.tool'
 endfunction
 
+" custom fzf status line color
 function! s:fzf_statusline()
   " Override statusline as you like
   highlight fzf1 ctermfg=161 ctermbg=251
@@ -197,6 +192,3 @@ function! s:fzf_statusline()
   highlight fzf3 ctermfg=237 ctermbg=251
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
-map <leader>F :call JSONPrettify()<cr>
