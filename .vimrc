@@ -1,4 +1,29 @@
 set encoding=utf-8
+" ###########################################################
+" dein command
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=/Users/eq/Documents/others/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state('/Users/eq/.vim/dein_bundle')
+  call dein#begin('/Users/eq/.vim/dein_bundle')
+
+  call dein#add('/Users/eq/Documents/others/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('fatih/vim-go')
+  call dein#add('zchee/deoplete-go', {'build': 'make'})
+
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+"####################################################################################
 
 " load up pathogen and all bundles
 call pathogen#infect()
@@ -49,47 +74,82 @@ set nocursorcolumn
 set norelativenumber
 syntax sync minlines=256
 "
-
-let mapleader = ","         " set leader key to comma
+"ale  Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 0
+"let g:ycm_add_preview_to_complete_opt = 0       " disable ycm preview window
+let mapleader = ","                             " set leader key to comma
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added = '❖'
-let g:neodark#terminal_transparent = 1
+let g:airline_theme='minimalist'
 let g:lightline = {
-      \ 'colorscheme': 'seoul256'
+      \ 'colorscheme': 'hydrangea',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"":""}',
+      \ },
+      \ 'separator':    { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' },
       \ }
 let g:ackprg = 'rg --vimgrep'
 
+"vim markdown
+let vim_markdown_preview_toggle=1
+let vim_markdown_preview_hotkey='<C-m>'
+
+
 " set dark background and color scheme
 set background=dark
-colorscheme neodark
-" set up some custom coloro
+colorscheme PaperColor
+" set vim background to terminal color
+" hi Normal guibg=NONE ctermbg=NONE
+" set up some custom color
 highlight clear SignColumn
-highlight StatusLineNC ctermbg=238 ctermfg=0
-highlight IncSearch    ctermbg=3   ctermfg=1
-highlight Search       ctermbg=1   ctermfg=3
-highlight Visual       ctermbg=3   ctermfg=0
-highlight Pmenu        ctermbg=240 ctermfg=12
-highlight PmenuSel     ctermbg=3   ctermfg=1
-highlight SpellBad     ctermbg=0   ctermfg=1
+"highlight StatusLineNC ctermbg=238 ctermfg=0
+"highlight IncSearch    ctermbg=3   ctermfg=1
+"highlight Search       ctermbg=1   ctermfg=3
+"highlight Visual       ctermbg=3   ctermfg=0
+"highlight Pmenu        ctermbg=240 ctermfg=12
+"highlight PmenuSel     ctermbg=3   ctermfg=1
+"highlight SpellBad     ctermbg=0   ctermfg=1
 highlight GitGutterAdd guifg = '#A3E28B'
-if version >= 700 " highlight the status bar when in insert mode
-  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
-endif
+"if version >= 700 " highlight the status bar when in insert mode
+"  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+"  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
+"endif
 
+" ale linter
+let g:ale_linters = {
+\  'ruby': ['reek', 'rubocop'],
+\}
+
+" swap supertab completion
+let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-go specific command
-let g:go_highlight_functions = 1
-let g:go_highlight_fields = 1
+let g:go_addtags_transform = "snakecase"
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_deadline = "3s"
-let g:go_def_mode = 'guru'
+" highlight all
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+"
+"let g:go_def_mode = ''
 let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
+"let g:go_auto_sameids = 1
+
 noremap <leader>T :GoCoverageToggle<cr>
 noremap <leader>D :GoDef<cr>
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=8 shiftwidth=8
+au FileType go nmap <leader>g :GoDeclsDir<cr>
 
 " fzf plugin related action
 if executable("fzf")
@@ -102,10 +162,12 @@ if executable("fzf")
     \   <bang>0)
   nmap ; :Buffers<CR>
   nmap <Leader>f :Files<CR>
-  nmap <Leader>g :Tags<CR>
+  " nmap <Leader>g :Tags<CR>
   " nmap <leader>F :Lines<CR> conflicted with JSONPrettify
 endif
-
+" map ale error navigation
+nmap <silent> <C-k> <Plug>(ale_previous)
+nmap <silent> <C-j> <Plug>(ale_next)
 " Map space " unmap ex mode: 'Type visual to go into Normal mode.'
 nnoremap Q <nop>
 " fast saving
@@ -117,10 +179,14 @@ vnoremap . :norm.<cr>
 " map git commands
 map <leader>l :!clear && git log -p %<cr>
 map <leader>d :!clear && git diff %<cr>
+" set fold to space
+nnoremap <space> za
+vnoremap <space> za
 " turn off ycm
-nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
+"let g:ycm_auto_trigger=0
+"nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
 " turn on ycm
-nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
+"nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
 " navigate tabs
 map <leader>m :tabprevious<cr>
 map <leader>. :tabnext<cr>
@@ -162,8 +228,24 @@ if has("gui_macvim")
   endif
 endif
 
+"nvim specific command
+if has("nvim")
+  let g:deoplete#enable_at_startup = 1
+  " nvim deoplete-go configuration
+  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#package_dot = 1
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  " neocomplete like
+  set completeopt+=noinsert
+  " deoplete.nvim recommend
+  set completeopt+=noselect
+
+  "exit terminal with nvim
+  tnoremap <Esc> <C-\><C-n>
+endif
+
 " run GoLint on save
-autocmd BufWritePre *.go call go#lint#Golint()
+"autocmd BufWritePre *.go call go#lint#Golint()
 " check white space on save
 autocmd BufWritePre * %s/\s\+$//e
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
