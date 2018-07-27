@@ -13,27 +13,29 @@ docker container start kafka-container
 # check if everything is running
 docker ps -a -f STATUS=running | awk '{print $2}'
 
-
-echo "checking backburner service"
-if pgrep -x "backburner" > /dev/null
-then
-  echo "backburner is alredy running"
-else
-  echo "starting backburner"
-  nohup bundle exec backburner >/dev/null 2&1 &
-  echo "backburner started"
-fi
-
-# init mothership development elasticsearch data
-echo "start filling elasticsearch cluster"
-for cluster in "${NEW_CLUSTER[@]}"
-do
-  echo "executing create indices on cluster $cluster"
-  bundle exec rake searcheror:create_indices ELASTICSEARCH_PRODUCT_CLUSTER=$cluster
-  bundle exec rake searcheror:reindex ELASTICSEARCH_PRODUCT_CLUSTER=$cluster
-done
-
-bundle exec rake elasticsearch:create_indices ELASTICSEARCH_URL=$OLD_CLUSTER
-bundle exec rake elasticsearch:reindex_index ELASTICSEARCH_URL=$OLD_CLUSTER
-echo "indexing done"
+#echo "sleeping for 10 sec....."
+#sleep 10
+#
+#echo "checking backburner service"
+#if pgrep -x "backburner" > /dev/null
+#then
+#  echo "backburner is alredy running"
+#else
+#  echo "starting backburner"
+#  nohup /Users/eq/Documents/ruby/mothership/bin/bundle exec /Users/eq/Documents/ruby/mothership/bin/backburner >/dev/null 2&1 &
+#  echo "backburner started"
+#fi
+#
+## init mothership development elasticsearch data
+#echo "start filling elasticsearch cluster"
+#for cluster in "${NEW_CLUSTER[@]}"
+#do
+#  echo "executing create indices on cluster $cluster"
+#  bundle exec rake searcheror:create_indices ELASTICSEARCH_PRODUCT_CLUSTER=$cluster
+#  bundle exec rake searcheror:reindex ELASTICSEARCH_PRODUCT_CLUSTER=$cluster
+#done
+#
+#bundle exec rake elasticsearch:create_indices ELASTICSEARCH_URL=$OLD_CLUSTER
+#bundle exec rake elasticsearch:reindex_index ELASTICSEARCH_URL=$OLD_CLUSTER
+#echo "indexing done"
 

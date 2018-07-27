@@ -1,12 +1,13 @@
 # If you come from bash you might have to change your $PATH.
 # /usr/local/opt/python/libexec/bin:$PATH
+export GOPATH="/Users/eq/Documents/go"
 export PATH="/usr/local/sbin:$PATH:$GOPATH/bin"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-export GOPATH="/Users/eq/Documents/go"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/eq/.oh-my-zsh
-
+export ZPLUG_HOME=/usr/local/opt/zplug
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -14,9 +15,11 @@ ZSH_THEME=""
 
 # Set CLICOLOR if you want Ansi Colors in iTerm2
 export CLICOLOR=1
+export EDITOR=nvim
 #
 # # Set colors to match iTerm2 Terminal Colors
- export TERM=xterm-256color
+export TERM=xterm-256color
+#export TERM=tmux-256color
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -61,12 +64,15 @@ plugins=(git, rails, ruby, osx)
 source $ZSH/oh-my-zsh.sh
 source /Users/eq/Documents/others/zsh-interactive-cd
 source /Users/eq/.aliases.sh
-
+source $ZPLUG_HOME/init.zsh
+# init gruvbox
+source /Users/eq/Documents/others/gruvbox/gruvbox_256palette_osx.sh
+#source ~/.bin/tmuxinator.bash
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -97,6 +103,17 @@ source /Users/eq/.aliases.sh
 #   docker-machine start $DOCKER_MACHINE && eval "$(docker-machine env $DOCKER_MACHINE)"
 #fi
 
+zplug "b4b4r07/enhancd", use:init.sh
+if ! zplug check; then
+    zplug install
+fi
+
+if zplug check b4b4r07/enhancd; then
+    # setting if enhancd is available
+    export ENHANCD_FILTER=fzf
+fi
+
+zplug load
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -200,6 +217,13 @@ fshow() {
                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
                 {}
 FZF-EOF"
+}
+
+# sleep-in - schedule sleep for macbook in minute
+sleep-in() {
+  local minutes=$1
+  local datetime=`date -v+${minutes}M +"%m/%d/%y %H:%M:%S"`
+  sudo pmset schedule sleep "$datetime"
 }
 
 autoload -U promptinit; promptinit

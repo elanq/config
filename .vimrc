@@ -64,7 +64,7 @@ set lazyredraw
 set linespace=8
 set splitright
 set guioptions=                   "remove any gui in macvim
-"set termguicolors
+set termguicolors
 set foldlevelstart=99            "don't atomatically fold large file
 "runtime macros/matchit.vim        " use % to jump between start/end of methods
 set updatetime=100               " useful for go info
@@ -73,25 +73,30 @@ set nocursorcolumn
 "set nocursorline
 set norelativenumber
 syntax sync minlines=256
-"
+
+let NERDTreeMinimalUI = 1
+
+let mapleader = ","                             " set leader key to comma
 "ale  Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
-let g:airline#extensions#ale#enabled = 0
-"let g:ycm_add_preview_to_complete_opt = 0       " disable ycm preview window
-let mapleader = ","                             " set leader key to comma
+
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled=1
+let g:airline_powerline_fonts=1
+let g:airline_theme='powerlineish'
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added = '❖'
-let g:airline_theme='minimalist'
-let g:lightline = {
-      \ 'colorscheme': 'hydrangea',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"":""}',
-      \ },
-      \ 'separator':    { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
+""let g:lightline = {
+""      \ 'colorscheme': 'hydrangea',
+""      \ 'component': {
+""      \   'readonly': '%{&readonly?"":""}',
+""      \ },
+""      \ 'separator':    { 'left': '', 'right': '' },
+""      \ 'subseparator': { 'left': '', 'right': '' },
+""      \ }
 let g:ackprg = 'rg --vimgrep'
 
 "vim markdown
@@ -100,29 +105,22 @@ let vim_markdown_preview_hotkey='<C-m>'
 
 
 " set dark background and color scheme
-set background=dark
-colorscheme PaperColor
-" set vim background to terminal color
-" hi Normal guibg=NONE ctermbg=NONE
+" set background=dark
+" colorscheme PaperColor
+let ayucolor="mirage"
+colorscheme ayu
 " set up some custom color
 highlight clear SignColumn
-"highlight StatusLineNC ctermbg=238 ctermfg=0
-"highlight IncSearch    ctermbg=3   ctermfg=1
-"highlight Search       ctermbg=1   ctermfg=3
-"highlight Visual       ctermbg=3   ctermfg=0
-"highlight Pmenu        ctermbg=240 ctermfg=12
-"highlight PmenuSel     ctermbg=3   ctermfg=1
-"highlight SpellBad     ctermbg=0   ctermfg=1
 highlight GitGutterAdd guifg = '#A3E28B'
-"if version >= 700 " highlight the status bar when in insert mode
-"  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-"  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
-"endif
 
 " ale linter
 let g:ale_linters = {
-\  'ruby': ['reek', 'rubocop'],
+\  'ruby': ['reek'],
+\  'go': ['gometalinter', 'gomfmt'],
 \}
+let g:ale_go_gometalinter_options="--fast"
+let g:ale_lint_delay = 1000
+let g:ale_lint_on_enter = 0
 
 " swap supertab completion
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -187,6 +185,9 @@ vnoremap <space> za
 "nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
 " turn on ycm
 "nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
+" easymotion
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
 " navigate tabs
 map <leader>m :tabprevious<cr>
 map <leader>. :tabnext<cr>
