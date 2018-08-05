@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # /usr/local/opt/python/libexec/bin:$PATH
+export GOROOT=/usr/local/Cellar/go/1.9.2/libexec
 export GOPATH="/Users/eq/Documents/go"
 export PATH="/usr/local/sbin:$PATH:$GOPATH/bin"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"

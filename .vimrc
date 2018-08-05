@@ -12,6 +12,7 @@ if dein#load_state('/Users/eq/.vim/dein_bundle')
   call dein#add('/Users/eq/Documents/others/dein/repos/github.com/Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('fatih/vim-go')
+
   call dein#add('zchee/deoplete-go', {'build': 'make'})
 
   if !has('nvim')
@@ -50,10 +51,6 @@ set cursorline                    " highlight current line
 set smartcase                     " pay attention to case when caps are used
 set incsearch                     " show search results as I type
 set ttimeoutlen=0                 " decrease timeout for faster insert with 'O'
-"set vb                            " enable visual bell (disable audio bell)
-set ruler                         " show row and column in footer
-set scrolloff=2                   " minimum lines above/below cursor
-set laststatus=2                  " always show status bar
 set foldmethod=indent             " fold by syntax is really slow
 set clipboard=unnamed             " use the system clipboard
 set wildmenu                      " enable bash style tab completion
@@ -66,7 +63,6 @@ set splitright
 set guioptions=                   "remove any gui in macvim
 set termguicolors
 set foldlevelstart=99            "don't atomatically fold large file
-"runtime macros/matchit.vim        " use % to jump between start/end of methods
 set updatetime=100               " useful for go info
 "improve syntax speed
 set nocursorcolumn
@@ -84,39 +80,32 @@ let g:ale_sign_warning = '⚠'
 
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#branch#enabled = 1
+
 let g:airline_powerline_fonts=1
 let g:airline_theme='powerlineish'
-let g:gitgutter_sign_modified = '•'
-let g:gitgutter_sign_added = '❖'
-""let g:lightline = {
-""      \ 'colorscheme': 'hydrangea',
-""      \ 'component': {
-""      \   'readonly': '%{&readonly?"":""}',
-""      \ },
-""      \ 'separator':    { 'left': '', 'right': '' },
-""      \ 'subseparator': { 'left': '', 'right': '' },
-""      \ }
 let g:ackprg = 'rg --vimgrep'
 
 "vim markdown
 let vim_markdown_preview_toggle=1
 let vim_markdown_preview_hotkey='<C-m>'
 
-
 " set dark background and color scheme
-" set background=dark
-" colorscheme PaperColor
 let ayucolor="mirage"
 colorscheme ayu
 " set up some custom color
 highlight clear SignColumn
+let g:gitgutter_sign_modified = '•'
+let g:gitgutter_sign_added = '❖'
+let g:gitgutter_highlight_lines=0
 highlight GitGutterAdd guifg = '#A3E28B'
+highlight GitGutterChange guifg = '#A3E28B'
+highlight GitGutterDelete guifg = '#A3E28B'
+highlight GitGutterChangeDelete guifg = '#A3E28B'
 
 " ale linter
 let g:ale_linters = {
-\  'ruby': ['reek'],
-\  'go': ['gometalinter', 'gomfmt'],
+\  'ruby': ['rubocop'],
 \}
 let g:ale_go_gometalinter_options="--fast"
 let g:ale_lint_delay = 1000
