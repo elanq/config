@@ -67,7 +67,7 @@ set updatetime=100               " useful for go info
 "improve syntax speed
 set nocursorcolumn
 "set nocursorline
-set norelativenumber
+set relativenumber
 syntax sync minlines=256
 
 let NERDTreeMinimalUI = 1
