@@ -104,17 +104,17 @@ export LANG=en_US.UTF-8
 #   docker-machine start $DOCKER_MACHINE && eval "$(docker-machine env $DOCKER_MACHINE)"
 #fi
 
-zplug "b4b4r07/enhancd", use:init.sh
-if ! zplug check; then
-    zplug install
-fi
-
-if zplug check b4b4r07/enhancd; then
-    # setting if enhancd is available
-    export ENHANCD_FILTER=fzf
-fi
-
-zplug load
+#zplug "b4b4r07/enhancd", use:init.sh
+#if ! zplug check; then
+#    zplug install
+#fi
+#
+#if zplug check b4b4r07/enhancd; then
+#    # setting if enhancd is available
+#    export ENHANCD_FILTER=fzf
+#fi
+#
+#zplug load
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -229,3 +229,8 @@ sleep-in() {
 
 autoload -U promptinit; promptinit
 prompt pure
+export PATH="/usr/local/opt/node@8/bin:$PATH"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/usr/local/opt/openssl/bin:$PATH"

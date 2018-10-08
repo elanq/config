@@ -43,7 +43,6 @@ set shiftwidth=2
 set expandtab                     " use spaces, not tab characters
 set nocompatible                  " don't need to be compatible with old vim
 set re=1                          "set regex engine to old one. apparently it's faster for ruby files
-set number
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
@@ -70,6 +69,7 @@ set nocursorcolumn
 set relativenumber
 syntax sync minlines=256
 
+autocmd Colorscheme * highlight FoldColumn guifg=bg guibg=bg
 let NERDTreeMinimalUI = 1
 
 let mapleader = ","                             " set leader key to comma
@@ -264,3 +264,26 @@ function! s:fzf_statusline()
   highlight fzf3 ctermfg=237 ctermbg=251
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
+
+" custom focus mode
+let s:focus_mode = 0
+function! ToggleFocusMode()
+  if s:focus_mode == 0
+    exec 'AirlineToggle'
+    "set showtabline=0
+    let s:focus_mode = 1
+    set noruler
+    set norelativenumber
+    set laststatus=0
+    set foldcolumn=3
+  else
+    set ruler
+    set laststatus=2
+    exec 'AirlineToggle'
+    let s:focus_mode = 0
+    set relativenumber
+    set foldcolumn=0
+  endif
+endfunction
+
+nnoremap <leader>H :call ToggleFocusMode()<cr>
