@@ -259,7 +259,7 @@ sleep-in() {
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # export wakatime API key for wakawaka
-export WAKATIME_API_KEY="71ad09db-a712-442a-ac64-2a55d8c20cad"
+export WAKATIME_API_KEY="b068ef23-960b-485f-b05b-a32499a7fab4"
 ##autoload -U promptinit; promptinit
 ##prompt pure
 #export PATH="/usr/local/opt/node@8/bin:$PATH"
@@ -280,5 +280,13 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-source ~/.rvm/scripts/rvm

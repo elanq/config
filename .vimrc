@@ -1,60 +1,62 @@
-set encoding=utf-8
 
-let mapleader = ","               " set leader key to comma
+" rename current file, via Gary Bernhardt
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'))
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
 
-syntax on                         " show syntax highlighting
-filetype plugin indent on
-set hidden
-set tags=./.tags;,tags;
-set autowrite
-set backspace=indent,eol,start
-set history=500
-set autoread
-set autoindent                    " set auto indent
-set ts=2                          " set indent to 2 spaces
-set shiftwidth=2
-set expandtab                     " use spaces, not tab characters
-set nocompatible                  " don't need to be compatible with old vim
-set re=1                          "set regex engine to old one. apparently it's faster for ruby files
-set showmatch                     " show bracket matches
-set ignorecase                    " ignore case in search
-set hlsearch                      " highlight all search matches
-set cursorline                    " highlight current line
-set smartcase                     " pay attention to case when caps are used
-set incsearch                     " show search results as I type
-set ttimeoutlen=0                 " decrease timeout for faster insert with 'O'
-set foldmethod=indent             " fold by syntax is really slow
-set clipboard=unnamed             " use the system clipboard
-set wildmenu                      " enable bash style tab completion
-set wildmode=list:longest,full
-set smarttab
-set rtp+=/usr/local/opt/fzf       " use fzf in vim
-set lazyredraw
-set linespace=8
-set splitright
-set guioptions=                   "remove any gui in macvim
-set foldlevelstart=99            "don't atomatically fold large file
-set updatetime=100               " useful for go info
-"improve syntax speed
-set nocursorcolumn
-"set nocursorline
-set relativenumber
-syntax sync minlines=256
+function! JSONPrettify()
+  exec ':%!python3 -m json.tool'
+endfunction
+
+function! CheckError()
+  exec 'CocList diagnostics'
+endfunction
+
+" CoC vim
+" use <tab> for trigger completion and navigate next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" custom fzf status line color
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
 
 autocmd Colorscheme * highlight FoldColumn guifg=bg guibg=bg
 let NERDTreeMinimalUI = 1
-
 "ale  Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
-
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-
 let g:airline_powerline_fonts=1
 let g:airline_theme='minimalist'
+" map ale error navigation
+nmap <silent> <C-k> <Plug>(ale_previous)
+nmap <silent> <C-j> <Plug>(ale_next)
+" ale linter
+let g:ale_linters = {
+\  'ruby': ['rubocop'],
+\  'go': ['govet','errcheck'],
+\}
+let g:ale_go_gometalinter_options="--fast"
+let g:ale_lint_delay = 1000
+let g:ale_lint_on_enter = 0
+
 let g:ackprg = 'rg --vimgrep'
 
 "vim markdown
@@ -72,17 +74,6 @@ highlight GitGutterChange guifg = '#A3E28B'
 highlight GitGutterDelete guifg = '#A3E28B'
 highlight GitGutterChangeDelete guifg = '#A3E28B'
 
-" ale linter
-let g:ale_linters = {
-\  'ruby': ['rubocop'],
-\  'go': ['govet','errcheck'],
-\}
-let g:ale_go_gometalinter_options="--fast"
-let g:ale_lint_delay = 1000
-let g:ale_lint_on_enter = 0
-
-" vim-go specific command
-
 " fzf plugin related action
 if executable("fzf")
   " we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
@@ -97,9 +88,6 @@ if executable("fzf")
   " nmap <Leader>g :Tags<CR>
   " nmap <leader>F :Lines<CR> conflicted with JSONPrettify
 endif
-" map ale error navigation
-nmap <silent> <C-k> <Plug>(ale_previous)
-nmap <silent> <C-j> <Plug>(ale_next)
 " Map space " unmap ex mode: 'Type visual to go into Normal mode.'
 nnoremap Q <nop>
 " fast saving
@@ -179,64 +167,8 @@ endif
 autocmd BufWritePre * %s/\s\+$//e
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-" rename current file, via Gary Bernhardt
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'))
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
-endfunction
-
-" prettify json file
-function! JSONPrettify()
-  exec ':%!python3 -m json.tool'
-endfunction
-
-function! CheckError()
-  "exec ':Denite coc-diagnostic'
-  exec 'CocList diagnostics'
-endfunction
-
-" custom fzf status line color
-function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-
 " custom focus mode
 let s:focus_mode = 0
-
-function! ToggleFocusMode()
-  if s:focus_mode == 0
-    exec 'AirlineToggle'
-    "set showtabline=0
-    let s:focus_mode = 1
-    set noruler
-    set norelativenumber
-    set laststatus=0
-    set foldcolumn=3
-  else
-    set ruler
-    set laststatus=2
-    exec 'AirlineToggle'
-    let s:focus_mode = 0
-    set relativenumber
-    set foldcolumn=0
-  endif
-endfunction
-
-" CoC vim
-" use <tab> for trigger completion and navigate next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
