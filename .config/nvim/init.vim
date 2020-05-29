@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 "Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-fugitive'
 Plug 'ayu-theme/ayu-vim'
 Plug 'vim-airline/vim-airline'
@@ -12,15 +13,17 @@ Plug 'sebdah/vim-delve'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'wakatime/vim-wakatime'
-Plug 'Shougo/denite.nvim'
+"Plug 'Shougo/denite.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-ruby/vim-ruby' "
 Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'fatih/vim-go'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'morhetz/gruvbox'
-Plug 'junegunn/seoul256.vim'
+Plug 'rainglow/vim'
+"Plug 'junegunn/seoul256.vim'
 "Plug 'xolox/vim-notes'
 "Plug 'yuttie/hydrangea-vim'
 "Plug 'majutsushi/tagbar'
@@ -35,8 +38,10 @@ set termguicolors
 let ayucolor="dark"
 "colorscheme seoul256
 colorscheme gruvbox
+"colorscheme "blink-contrast"
 "let g:gruvbox_contrast_dark='light'
 
+let g:coc_global_extensions = ['coc-solargraph']
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.config/nvim/editor.vim

@@ -2,6 +2,7 @@
 # /usr/local/opt/python/libexec/bin:$PATH export GOROOT=/usr/local/Cellar/go/1.11.2/libexec
 #
 export GOPATH="/Users/eq/Documents/go"
+export GOSUMDB=off
 export PATH="/usr/local/sbin:$PATH:$GOPATH/bin"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="/usr/local/lib/python3.7/site-packages:$PATH"
@@ -287,6 +288,8 @@ if [ -f '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eq
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
