@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # /usr/local/opt/python/libexec/bin:$PATH export GOROOT=/usr/local/Cellar/go/1.11.2/libexec
 #
+set -o vi
+
 export GOPATH="/Users/eq/Documents/go"
 export GOSUMDB=off
 export PATH="/usr/local/sbin:$PATH:$GOPATH/bin"
@@ -288,8 +290,12 @@ if [ -f '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eq
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
