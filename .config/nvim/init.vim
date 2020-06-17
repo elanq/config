@@ -24,6 +24,8 @@ Plug 'morhetz/gruvbox'
 Plug 'rainglow/vim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'sheerun/vim-polyglot'
+Plug 'camspiers/animate.vim'
+Plug 'camspiers/lens.vim'
 call plug#end()
 
 set termguicolors
@@ -41,6 +43,11 @@ source ~/.config/nvim/commons.vim
 source ~/.vimrc
 source ~/.config/nvim/golang.vim
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+augroup TerminalStuff
+  au!
+  autocmd TermOpen * setlocal nonumber norelativenumber
+augroup END
 
 set noshowcmd
 set noshowmode
