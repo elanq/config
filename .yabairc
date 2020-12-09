@@ -33,6 +33,10 @@ yabai -m rule --add label="Firefox PIP" app="^Firefox$" title="^(Picture-in-Pict
 yabai -m rule --add label="Telegram" app="^Telegram$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" manage=off
 yabai -m rule --add label="Flock" app="^Flock$" manage=off
+yabai -m rule --add label="Things" app="^Things$" manage=off
+yabai -m rule --add label="BlueStacks" app="^BlueStacks$" manage=off sticky=on
+yabai -m rule --add label="Sequel Pro" app="^Sequel Pro$" manage=off sticky=on
+yabai -m rule --add label="Spotify" app="^Spotify$" manage=off sticky=on
 yabai -m rule --add app="^System Preferences$" sticky=on
 
 echo "yabai configuration loaded.."

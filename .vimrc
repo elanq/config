@@ -44,7 +44,7 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline_powerline_fonts=1
-let g:airline_theme='minimalist'
+let g:airline_theme='gruvbox_material'
 " map ale error navigation
 nmap <silent> <C-k> <Plug>(ale_previous)
 nmap <silent> <C-j> <Plug>(ale_next)

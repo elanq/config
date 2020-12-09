@@ -3,8 +3,10 @@
 #
 set -o vi
 
+export PARALLEL_SPEC=1
 export GOPATH="/Users/eq/Documents/go"
 export GOSUMDB=off
+export RUBYOPT="-W0"
 export PATH="/usr/local/sbin:$PATH:$GOPATH/bin"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="/usr/local/lib/python3.7/site-packages:$PATH"
@@ -72,6 +74,7 @@ plugins=(git, rails, ruby, osx, kubectl)
 source $ZSH/oh-my-zsh.sh
 source /Users/eq/.aliases.sh
 source $ZPLUG_HOME/init.zsh
+#source /Users/eq/Documents/others/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # init gruvbox
 # source /Users/eq/Documents/others/gruvbox/gruvbox_256palette_osx.sh
 #source ~/.bin/tmuxinator.bash
@@ -123,7 +126,7 @@ export LANG=en_US.UTF-8
 #zplug load
 #
 #eval docker everytime bash is opened
-eval $(docker-machine env)
+#eval $(docker-machine env)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -273,9 +276,11 @@ export WAKATIME_API_KEY="b068ef23-960b-485f-b05b-a32499a7fab4"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
-  # Set Spaceship ZSH as a prompt
+# Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
 prompt pure
+# Set Spaceship ZSH as a prompt
+
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 #_comp_options="${_comp_options/NO_warnnestedvar/}"
@@ -285,11 +290,8 @@ eval "$(pyenv virtualenv-init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/eq/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/eq/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -298,4 +300,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
 

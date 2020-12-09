@@ -29,10 +29,9 @@
     "vscode_custom_css.policy": true,
     "window.zoomLevel": 1,
     "workbench.activityBar.visible": false,
-    "workbench.colorTheme": "Github Light Theme",
-    "workbench.editor.showTabs": false,
+    "workbench.colorTheme": "Seoul Light",
+    "workbench.editor.showTabs": true,
     "workbench.editor.tabSizing": "shrink",
-    "workbench.fontAliasing": "auto",
     "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
     "workbench.sideBar.location": "left",
     "workbench.statusBar.feedback.visible": false,
@@ -132,7 +131,7 @@
             ]
         }
     ],
-    "editor.fontFamily": "Fantasque Sans Mono, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "Liga Fantasque Sans Mono, Monaco, 'Courier New', monospace",
     "editor.scrollbar.horizontal": "hidden",
     "editor.scrollbar.vertical": "hidden",
     "go.autocompleteUnimportedPackages": true,
@@ -142,4 +141,5 @@
     "editor.lineHeight": 20,
     "window.title": "${activeEditorShort}",
     "gitHistory.showEditorTitleMenuBarIcons": false,
+    "workbench.fontAliasing": "auto",
 }
