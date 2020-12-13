@@ -30,6 +30,7 @@ Plug 'patstockwell/vim-monokai-tasty'
 Plug 'sainnhe/sonokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'voldikss/vim-floaterm'
+"Plug 'dylanaraps/fff.vim'
 "Plug 'nvim-treesitter/nvim-treesitter'
 "Plug 'camspiers/animate.vim'
 "Plug 'camspiers/lens.vim'
@@ -64,6 +65,10 @@ let g:airline_powerline_fonts=1
 "let g:airline_theme='monokai_tasty'
 let g:airline_theme='minimalist'
 "let g:airline_theme='zenburn'
+"
+" Floaterm config
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
 
 augroup TerminalStuff
   au!

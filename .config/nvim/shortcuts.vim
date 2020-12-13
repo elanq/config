@@ -8,6 +8,9 @@ if executable("fzf")
   noremap <silent> <Leader>a :Rg <C-R><C-W><cr>
 endif
 
+" set floating terminal
+nnoremap t :FloatermToggle <cr>
+"nnoremap t :FloatermNew --height=0.6 --width=0.4 --wintype=floating --name=floaterm1<cr>
 " Map space " unmap ex mode: 'Type visual to go into Normal mode.'
 nnoremap Q <nop>
 " fast saving
