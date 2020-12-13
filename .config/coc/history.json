@@ -1,0 +1,23 @@
+{
+  "lists": {
+    "%2FUsers%2Fsleekr": [
+      "service"
+    ],
+    "%2FUsers%2Fsleekr%2FDocuments%2Fruby%2Fquickbook": [
+      "exte"
+    ]
+  },
+  "services": {
+    "%2FUsers%2Fsleekr%2FDocuments%2Fruby%2Fquickbook": [
+      ":Coc"
+    ]
+  },
+  "outline": {
+    "%2FUsers%2Fsleekr%2FDocuments%2Fruby%2Fquickbook": [
+      "g"
+    ],
+    "%2FUsers%2Fsleekr%2Fwork%2Fruby%2Fquickbook": [
+      "kj"
+    ]
+  }
+}

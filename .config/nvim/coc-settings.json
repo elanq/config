@@ -1,0 +1,16 @@
+{
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "hoverKind": "SynopsisDocumentation",
+        "completeUnimported": true
+      }
+    }
+  },
+  "codeLens.enable": true,
+  "solargraph.useBundler": false
+}
